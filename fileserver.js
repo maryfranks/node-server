@@ -8,8 +8,10 @@ http.createServer(function(request, response) {
   console.log(`${request.method} request for ${request.url}`);
 
   if (request.url === "/") {
-    response.writeHead(200, {"Content-Type": "text/plain"})
-    response.end("Hello World!")
+    fs.readFile("./public/index.html", "UTF-8", function(err, html) {
+      response.writeHead(200, {"Content-Type": "text/html"});
+      response.end(html);
+    });
 
   } else {
     response.writeHead(404, {"Content-Type": "text/plain"})
