@@ -13,6 +13,15 @@ http.createServer(function(request, response) {
       response.end(html);
     });
 
+  } else if (request.url.match(/.css$/)) {
+
+    var cssPath = path.join(__dirname, 'public', request.url);
+    var fileStream = fs.createReadStream(cssPath, "UTF-8");
+
+    response.writeHead(200, {"Content-Type": "text/css"});
+
+    fileStream.pipe(response);
+
   } else {
     response.writeHead(404, {"Content-Type": "text/plain"})
     response.end("404: File not Found")
